@@ -3,19 +3,40 @@ import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'; 
 import Cronometro from './assets/cronometro.png';
  
 class App extends Component {
+
+  constructor(props){
+    super(props);
+    this.state = {   // 2 - states iniciais 
+      numero: 0,
+    }
+    this.go = this.go.bind(this);   // 2 linkando o this.go com a funcao go  atravez da bind
+    this.stop = this.stop.bind(this); // 2 linkando o this.stop com a funcao stop atravez da bind
+  }
+
+  go(){
+    alert('Go')
+  };
+  stop(){
+
+  }
+
+
   render(){
     return(
       <View style={styles.container}>  
         <Image 
         source={Cronometro}
         style={styles.image}
-        />
-        <Text style={styles.textCronometro}>0.0</Text>
+        />                                  
+          
+        <Text style={styles.textCronometro}>
+          {this.state.numero.toFixed(1) /* 2 state numero que vai ser alterado posteriormente - tofixed(1) para ter 1 casa decimal*/}
+        </Text> 
         <View style={styles.btnArea}>
-          <TouchableOpacity style={styles.btn}>
+          <TouchableOpacity style={styles.btn} onPress={this.go} /* 2 acao de pressionar e chamar o state go */ > 
             <Text style={styles.btnTexto}>Vai</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.btn}>
+          <TouchableOpacity style={styles.btn} onPress={this.stop} /* 2 acao de pressionar e chamar o state stop */>
             <Text style={styles.btnTexto}>Limpar</Text>
           </TouchableOpacity>
         </View>
