@@ -9,13 +9,28 @@ class App extends Component {
     this.state = {   // 2 - states iniciais 
       numero: 0,
     }
+    this.timer = null; // 3 - variavel para pausar o setInterval consequentemente pausar o relogio *obs toda vez que começa o app o timer esta null
     this.go = this.go.bind(this);   // 2 linkando o this.go com a funcao go  atravez da bind
     this.stop = this.stop.bind(this); // 2 linkando o this.stop com a funcao stop atravez da bind
   }
 
-  go(){
-    alert('Go')
+  go(){  // 3 funcao go para alterar state numero
+
+    if (this.timer != null){ // 4 se for diferente de null ou seja esta rodando o relogio
+      // 5 aqui vai parar o timer
+      clearInterval(this.timer); // 5 limpa o intervalo e pausa
+      this.timer = null; // 5 e  timer volta a ser null
+      
+    }else {
+
+      this.timer = setInterval(() => {  // 3 - setInterval serve para executar uma função ou instrução várias vezes em um determinado intervalo de tempo // 4 this timer state para pausar
+        this.setState({numero: this.state.numero + 0.1}) // 3  pega 0.0 + 0.1 e fazendo em looping
+      }, 100); // 3 - de quantos milissegundos ele vai chamar o setInterval
+
+    }
   };
+
+
   stop(){
 
   }
