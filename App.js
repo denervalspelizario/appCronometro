@@ -8,6 +8,7 @@ class App extends Component {
     super(props);
     this.state = {   // 2 - states iniciais 
       numero: 0,
+      botao: 'Go'
     }
     this.timer = null; // 3 - variavel para pausar o setInterval consequentemente pausar o relogio *obs toda vez que começa o app o timer esta null
     this.go = this.go.bind(this);   // 2 linkando o this.go com a funcao go  atravez da bind
@@ -20,13 +21,16 @@ class App extends Component {
       // 5 aqui vai parar o timer
       clearInterval(this.timer); // 5 limpa o intervalo e pausa
       this.timer = null; // 5 e  timer volta a ser null
+      this.setState({botao: 'Go'})
       
     }else {
+      // 6 começa a girar o timer
+      this.timer = setInterval(() => {  // 3 - setInterval  executa uma função ou instrução várias vezes em um determinado intervalo de tempo no caso a cada 100 milesimos de segundos
+                                       // 4 this timer state para pausar
+        this.setState({numero: this.state.numero + 0.1}) // 3  pega state numero que no caso é  0.0 e soma com  0.1 e fazendo em looping por causa do setInternal
+      }, 100); // 3 - de quantos milissegundos ele vai repetir o setInterval
 
-      this.timer = setInterval(() => {  // 3 - setInterval serve para executar uma função ou instrução várias vezes em um determinado intervalo de tempo // 4 this timer state para pausar
-        this.setState({numero: this.state.numero + 0.1}) // 3  pega 0.0 + 0.1 e fazendo em looping
-      }, 100); // 3 - de quantos milissegundos ele vai chamar o setInterval
-
+      this.setState({botao: 'Stop'})
     }
   };
 
@@ -49,7 +53,7 @@ class App extends Component {
         </Text> 
         <View style={styles.btnArea}>
           <TouchableOpacity style={styles.btn} onPress={this.go} /* 2 acao de pressionar e chamar o state go */ > 
-            <Text style={styles.btnTexto}>Vai</Text>
+            <Text style={styles.btnTexto}>{this.state.botao}</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.btn} onPress={this.stop} /* 2 acao de pressionar e chamar o state stop */>
             <Text style={styles.btnTexto}>Limpar</Text>
