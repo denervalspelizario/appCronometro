@@ -8,7 +8,8 @@ class App extends Component {
     super(props);
     this.state = {   // 2 - states iniciais 
       numero: 0,
-      botao: 'Go'
+      botao: 'Go',
+      ultimoTempo: null // 8 - state criacao historico de ultimo tempo usado, state inical em null
     }
     //timer é a variavel do relogio
     this.timer = null; // 3 - variavel para pausar o setInterval consequentemente pausar o relogio *obs toda vez que começa o app o timer esta null
@@ -39,11 +40,14 @@ class App extends Component {
   stop(){
 
     if(this.timer != null){ // 7 se timer for diferente de null ou seja se estiver rodando
+      // 8 vai limpar o tempo
       clearInterval(this.timer); // 7 - limpa o interval e pausa
       this.timer = null; // 7 - e  timer volta a ser null
+      
     }
     this.setState({
-      numero: 0   // 7 e setState numero recebe 0 
+      numero: 0,   // 7 e setState numero recebe 0 
+      ultimoTempo: 'Último tempo ' + this.state.numero.toFixed(2) + 's',  // 8 pega o valor da state ultimoTempo e altera pelo seState para o novo valor
     })
 
   }
@@ -67,6 +71,10 @@ class App extends Component {
           <TouchableOpacity style={styles.btn} onPress={this.stop} /* 2 acao de pressionar e chamar o state stop */>
             <Text style={styles.btnTexto}>Limpar</Text>
           </TouchableOpacity>
+        </View>
+        <View style={styles.containerHistorico}> 
+          {/* 8 container com texto que recebe a state do ultimo tempo */}
+          <Text  style={styles.textHistorico}>{this.state.ultimoTempo}</Text>
         </View>
       </View>
     )
@@ -107,6 +115,15 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     color: '#00BFFF'
+  },
+  containerHistorico:{
+    marginTop: 40,
+  },
+  textHistorico:{
+    fontSize: 25,
+    fontStyle: 'italic',
+    color:'#FFF'
+
   }
 });
 
