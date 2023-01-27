@@ -10,6 +10,7 @@ class App extends Component {
       numero: 0,
       botao: 'Go'
     }
+    //timer é a variavel do relogio
     this.timer = null; // 3 - variavel para pausar o setInterval consequentemente pausar o relogio *obs toda vez que começa o app o timer esta null
     this.go = this.go.bind(this);   // 2 linkando o this.go com a funcao go  atravez da bind
     this.stop = this.stop.bind(this); // 2 linkando o this.stop com a funcao stop atravez da bind
@@ -18,24 +19,32 @@ class App extends Component {
   go(){  // 3 funcao go para alterar state numero
 
     if (this.timer != null){ // 4 se for diferente de null ou seja esta rodando o relogio
-      // 5 aqui vai parar o timer
+      // 5 aqui vai PARAR o TIMER
       clearInterval(this.timer); // 5 limpa o intervalo e pausa
       this.timer = null; // 5 e  timer volta a ser null
-      this.setState({botao: 'Go'})
+      this.setState({botao: 'Go'}) // 6 - alteracao de state botao de STOP vai para GO quando estiver em pausa
       
     }else {
-      // 6 começa a girar o timer
+      // 6 começa a GIRAR o TIMER
       this.timer = setInterval(() => {  // 3 - setInterval  executa uma função ou instrução várias vezes em um determinado intervalo de tempo no caso a cada 100 milesimos de segundos
                                        // 4 this timer state para pausar
         this.setState({numero: this.state.numero + 0.1}) // 3  pega state numero que no caso é  0.0 e soma com  0.1 e fazendo em looping por causa do setInternal
       }, 100); // 3 - de quantos milissegundos ele vai repetir o setInterval
 
-      this.setState({botao: 'Stop'})
+      this.setState({botao: 'Stop'}) // 6 - alteracao de state botao stop quando estiver rodando 
     }
   };
 
 
   stop(){
+
+    if(this.timer != null){ // 7 se timer for diferente de null ou seja se estiver rodando
+      clearInterval(this.timer); // 7 - limpa o interval e pausa
+      this.timer = null; // 7 - e  timer volta a ser null
+    }
+    this.setState({
+      numero: 0   // 7 e setState numero recebe 0 
+    })
 
   }
 
